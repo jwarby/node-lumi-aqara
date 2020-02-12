@@ -93,8 +93,10 @@ class Gateway extends events.EventEmitter {
               subdevice = new WallSwitch({ sid })
               break
             case 'motion':
-            case 'sensor_motion.aq2':
               subdevice = new Motion({ sid })
+              break
+            case 'sensor_motion.aq2':
+              subdevice = new Motion({ sid }, true)
               break
             case 'sensor_ht':
             case 'weather.v1':

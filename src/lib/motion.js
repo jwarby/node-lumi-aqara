@@ -1,11 +1,11 @@
 const Subdevice = require('./subdevice')
 
 class Motion extends Subdevice {
-  constructor (opts) {
+  constructor (opts, supportsLux = false) {
     super({ sid: opts.sid, type: 'motion' })
 
     this._motion = null
-    this._lux = null
+    this._lux = supportsLux ? "0" : null
     this._seconds = null
   }
 
