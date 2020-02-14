@@ -32,6 +32,18 @@ class Aqara extends events.EventEmitter {
     this._serverSocket.bind(SERVER_PORT, '0.0.0.0')
   }
 
+  disconnect(done) {
+    this._serverSocket.close(() => {
+      done()
+      this._serverSocket = null
+      this._gateways.entries().forEach((gateway) => {
+        gateway.removeAllListeners()
+        gateway.destroy()
+      })
+      this._gateways.clear()
+    })
+  }
+
   _triggerWhois () {
     const payload = '{"cmd": "whois"}'
     this._serverSocket.send(payload, 0, payload.length, DISCOVERY_PORT, MULTICAST_ADDRESS)

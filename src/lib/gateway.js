@@ -35,6 +35,10 @@ class Gateway extends events.EventEmitter {
     this._sendUnicast({ cmd: 'get_id_list' })
   }
 
+  destroy() {
+    clearTimeout(this._heartbeatWatchdog)
+  }
+
   _sendUnicast(payload) {
     if (payload.data) {
       payload.data.key = this._key
